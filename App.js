@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Image, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import mensa_logo from "./assets/mensa_logo.png";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,12 +40,14 @@ export default function App() {
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.container}>
+      <Image style={styles.logo} source={mensa_logo} />
       <Button
         title="Kalender"
         onPress={() => navigation.navigate("Kalender")}
       />
       <Button
+        style={styles.button}
         title="Gerichte"
         onPress={() => navigation.navigate("Gerichte")}
       />
@@ -101,10 +104,19 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
-  buttontxt: {
+  button: {
     margin: 32,
     padding: 32,
+    backgroundColor: "#24a0ed",
     borderWidth: 3,
     borderColor: "#24a0ed",
+  },
+
+  logo: {
+    width: 360,
+    margin: 32,
+    borderWidth: 3,
+    borderColor: "#24a0ed",
+    borderRadius: 15,
   },
 });
