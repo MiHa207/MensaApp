@@ -1,12 +1,16 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
-import { TailwindProvider } from "tailwindcss-react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.header}>
+        <Text style={styles.headTxt}>Mensa App</Text>
+      </View>
+      <View>
+        <Button style={styles.buttontxt} title="Kalender" />
+        <Button title="Essensplan" />
+        <Button title="Gerichte" />
+      </View>
     </View>
   );
 }
@@ -16,6 +20,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+  },
+
+  header: {
+    backgroundColor: "#24a0ed",
+    margin: 16,
+    padding: 16,
+  },
+
+  headTxt: {
+    color: "#fff",
+    fontSize: 32,
+    padding: 16,
+  },
+
+  buttontxt: {
+    margin: 32,
+    padding: 32,
+    borderWidth: 3,
+    borderColor: "#24a0ed",
   },
 });
