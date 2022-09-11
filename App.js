@@ -1,4 +1,5 @@
-import { StyleSheet, Image, Text, View, Button } from "react-native";
+import React from "react";
+import { StyleSheet, Image, Text, View, Button, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mensa_logo from "./assets/mensa_logo.png";
@@ -42,19 +43,24 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={mensa_logo} />
-      <Button
-        title="Kalender"
-        onPress={() => navigation.navigate("Kalender")}
-      />
-      <Button
+      <Pressable
         style={styles.button}
-        title="Gerichte"
+        onPress={() => navigation.navigate("Kalender")}
+      >
+        <Text style={styles.buttontxt}>Essensplan</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
         onPress={() => navigation.navigate("Gerichte")}
-      />
-      <Button
-        title="Essensplan"
+      >
+        <Text style={styles.buttontxt}>Gerichte</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
         onPress={() => navigation.navigate("Essensplan")}
-      />
+      >
+        <Text style={styles.buttontxt}>Essensplan</Text>
+      </Pressable>
     </View>
   );
 };
@@ -105,15 +111,27 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    margin: 32,
-    padding: 32,
+    margin: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    elevation: 3,
     backgroundColor: "#24a0ed",
-    borderWidth: 3,
-    borderColor: "#24a0ed",
+  },
+
+  buttontxt: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "#fff",
   },
 
   logo: {
     width: 360,
+    height: 180,
     margin: 32,
     borderWidth: 3,
     borderColor: "#24a0ed",
