@@ -45,21 +45,21 @@ const HomeScreen = ({ navigation }) => {
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("Kalender")}
+        onPress={() => navigation.navigate("Essensplan")}
       >
         <Text style={styles.buttontxt}>Essensplan</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Kalender")}
+      >
+        <Text style={styles.buttontxt}>Kalender</Text>
       </Pressable>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Gerichte")}
       >
         <Text style={styles.buttontxt}>Gerichte</Text>
-      </Pressable>
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Essensplan")}
-      >
-        <Text style={styles.buttontxt}>Essensplan</Text>
       </Pressable>
     </View>
   );
@@ -98,12 +98,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  header: {
-    backgroundColor: "#24a0ed",
-    margin: 16,
-    padding: 16,
-  },
-
   headTxt: {
     color: "#fff",
     fontSize: 32,
@@ -111,6 +105,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    width: 180,
     margin: 16,
     alignItems: "center",
     justifyContent: "center",
