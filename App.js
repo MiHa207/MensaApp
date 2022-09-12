@@ -1,13 +1,24 @@
-import React from "react";
-import { StyleSheet, Image, Text, View, Button, Pressable } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  Button,
+  Pressable,
+  RecyclerViewBackedScrollView,
+  TextInput,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mensa_logo from "./assets/mensa_logo.png";
 import WeeklyCalendar from "react-native-weekly-calendar";
+import { FlatList, SafeAreaView } from "react-native-web";
+import { Picker } from "@react-native-picker/picker";
 
 const Stack = createNativeStackNavigator();
 
-// NAVIGATION
+// <<<<<NAVIGATION>>>>>
 
 export default function App() {
   return (
@@ -20,7 +31,7 @@ export default function App() {
         />
         <Stack.Screen
           name="Kalender"
-          component={CalenderScreen}
+          component={CalendarScreen}
           options={{ title: "Kalenderwoche" }}
         />
         <Stack.Screen
@@ -33,13 +44,19 @@ export default function App() {
           component={PlanScreen}
           options={{ title: "Essenplan" }}
         />
+        <Stack.Screen
+          name="Neues Gericht"
+          component={NewDishScreen}
+          options={{ title: "Neues Gericht" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-// SCREENS
+// <<<<<SCREENS>>>>>
 
+// HOME_SCREEN
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -66,7 +83,8 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-const CalenderScreen = ({ navigation }) => {
+//CALENDAR_SCREEN
+const CalendarScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <WeeklyCalendar style={styles.calendar} />
@@ -74,14 +92,47 @@ const CalenderScreen = ({ navigation }) => {
   );
 };
 
+//DISHES_SCREEN
 const DishesScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>Gerichte</Text>
+    <View style={styles.container}>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Neues Gericht")}
+      >
+        <Text style={styles.buttontxt}>Gericht hinzufügen</Text>
+      </Pressable>
     </View>
   );
 };
 
+//NEW_DISH_SCREEN
+const NewDishScreen = ({ navigation }) => {
+  const [currency, setCurrency] = useState("US Dollar");
+  return (
+    <View>
+      <Text> Demo Form </Text>
+      <View>
+        <TextInput placeholder="Email" />
+        <TextInput secureTextEntry={true} placeholder="Password" />
+        <Picker
+          selectedValue={currency}
+          onValueChange={(currentCurrency) => setCurrency(currentCurrency)}
+        >
+          <Picker.Item label="Schwein" value="Schwein" />
+          <Picker.Item label="Rind" value="Rind" />
+          <Picker.Item label="Huhn" value="Huhn" />
+          <Picker.Item label="Fisch" value="Fisch" />
+          <Picker.Item label="Vegetarisch" value="Vegetarisch" />
+          <Picker.Item label="Vegan" value="Vegan" />
+        </Picker>
+        <Text>Selected: {currency}</Text>
+      </View>
+    </View>
+  );
+};
+
+//PLAN_SCREEN
 const PlanScreen = ({ navigation }) => {
   return (
     <View>
@@ -90,7 +141,7 @@ const PlanScreen = ({ navigation }) => {
   );
 };
 
-// STYLES
+// <<<<<STYLES>>>>>
 
 const styles = StyleSheet.create({
   container: {
@@ -138,5 +189,23 @@ const styles = StyleSheet.create({
     height: 600,
     themeColor: "#24a0ed",
     color: "#24a0ed",
+  },
+  formLabel: {
+    fontSize: 20,
+    color: "#fff",
+  },
+  inputStyle: {
+    marginTop: 20,
+    width: 300,
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 50,
+    backgroundColor: "#b9e4c9",
+  },
+  formText: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#fff",
+    fontSize: 20,
   },
 });
