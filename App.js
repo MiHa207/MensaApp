@@ -3,6 +3,7 @@ import { StyleSheet, Image, Text, View, Button, Pressable } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mensa_logo from "./assets/mensa_logo.png";
+import WeeklyCalendar from "react-native-weekly-calendar";
 
 const Stack = createNativeStackNavigator();
 
@@ -67,8 +68,8 @@ const HomeScreen = ({ navigation }) => {
 
 const CalenderScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>Kalender</Text>
+    <View style={styles.container}>
+      <WeeklyCalendar style={styles.calendar} />
     </View>
   );
 };
@@ -131,5 +132,11 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#24a0ed",
     borderRadius: 15,
+  },
+
+  calendar: {
+    height: 600,
+    themeColor: "#24a0ed",
+    color: "#24a0ed",
   },
 });
