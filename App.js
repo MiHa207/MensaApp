@@ -6,12 +6,13 @@ import {
   View,
   Pressable,
   TextInput,
+  SafeAreaView,
+  FlatList,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mensa_logo from "./assets/background.jpg";
 import WeeklyCalendar from "react-native-weekly-calendar";
-import { FlatList, SafeAreaView } from "react-native-web";
 import { Picker } from "@react-native-picker/picker";
 
 const Stack = createNativeStackNavigator();
@@ -126,9 +127,59 @@ const CalendarScreen = ({ navigation }) => {
 };
 
 //DISHES_SCREEN
+const dummyArray = [
+  { id: "1", value: "Dish1" },
+  { id: "2", value: "Dish2" },
+  { id: "3", value: "Dish3" },
+];
+
 const DishesScreen = ({ navigation }) => {
+  const [listItems, setListItems] = useState(dummyArray);
+
+  const ItemView = ({ item }) => {
+    return (
+      // FlatList Item
+      <View>
+        <Text style={styles.item} onPress={() => getItem(item)}>
+          {item.value}
+        </Text>
+      </View>
+    );
+  };
+
+  const ItemSeparatorView = () => {
+    return (
+      // FlatList Item Separator
+      <View
+        style={{
+          height: 0.5,
+
+          width: "100%",
+
+          backgroundColor: "#C8C8C8",
+        }}
+      />
+    );
+  };
+
+  const getItem = (item) => {
+    //Function for click on an item
+
+    alert("Id: " + item.id + " Value: " + item.value);
+  };
+
   return (
     <View style={styles.container}>
+      <FlatList
+        data={listItems}
+        //data defined in constructor
+
+        ItemSeparatorComponent={ItemSeparatorView}
+        //Item Separator View
+
+        renderItem={ItemView}
+        keyExtractor={(item, index) => index.toString()}
+      />
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Neues Gericht")}
@@ -300,5 +351,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: "#fff",
     fontSize: 20,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
   },
 });
