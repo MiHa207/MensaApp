@@ -118,7 +118,7 @@ const NewDishScreen = ({ navigation }) => {
           selectedValue={foodtype}
           onValueChange={(currentFoodtype) => setFoodtype(currentFoodtype)}
         >
-          <Picker.Item label="Schwein" value="Fleisch" />
+          <Picker.Item label="Fleisch" value="Fleisch" />
           <Picker.Item label="Vegetarisch" value="Vegetarisch" />
           <Picker.Item label="Vegan" value="Vegan" />
         </Picker>
