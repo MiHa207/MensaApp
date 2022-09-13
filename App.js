@@ -122,7 +122,6 @@ const NewDishScreen = ({ navigation }) => {
           <Picker.Item label="Vegetarisch" value="Vegetarisch" />
           <Picker.Item label="Vegan" value="Vegan" />
         </Picker>
-        <Text>Selected: {foodtype}</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
@@ -199,10 +198,13 @@ const styles = StyleSheet.create({
   inputStyle: {
     marginTop: 20,
     width: 300,
-    height: 100,
-    paddingHorizontal: 10,
+    height: 50,
+    padding: 10,
     borderRadius: 50,
-    backgroundColor: "#24a0ed",
+    backgroundColor: "#f1f1f7",
+    fontSize: 20,
+    borderColor: "#e7e7ec",
+    borderRadius: 20,
   },
   formText: {
     alignItems: "center",
