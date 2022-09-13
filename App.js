@@ -4,9 +4,7 @@ import {
   Image,
   Text,
   View,
-  Button,
   Pressable,
-  RecyclerViewBackedScrollView,
   TextInput,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
