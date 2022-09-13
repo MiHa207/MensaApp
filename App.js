@@ -22,39 +22,60 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home"
-
-                         screenOptions={{
-                           headerStyle: { backgroundColor: '#1e1e1e' }
-                         }}>
-          <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{ title: "MensaApp" , headerTitleStyle:{color:'#efaa47'},headerTitleAlign:"center" }}
-          />
-          <Stack.Screen
-              name="Kalender"
-              component={CalendarScreen}
-              options={{ title: "Kalenderwoche",headerTitleStyle:{color:'#efaa47'},headerTitleAlign:"center" }}
-          />
-          <Stack.Screen
-              name="Gerichte"
-              component={DishesScreen}
-              options={{ title: "Gerichte",headerTitleStyle:{color:'#efaa47'},headerTitleAlign:"center" }}
-          />
-          <Stack.Screen
-              name="Essensplan"
-              component={PlanScreen}
-              options={{ title: "Essenplan",headerTitleStyle:{color:'#efaa47'},headerTitleAlign:"center" }}
-          />
-          <Stack.Screen
-              name="Neues Gericht"
-              component={NewDishScreen}
-              options={{ title: "Neues Gericht",headerTitleStyle:{color:'#efaa47'},headerTitleAlign:"center" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: { backgroundColor: "#1e1e1e" },
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: "MensaApp",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="Kalender"
+          component={CalendarScreen}
+          options={{
+            title: "Kalenderwoche",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="Gerichte"
+          component={DishesScreen}
+          options={{
+            title: "Gerichte",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="Essensplan"
+          component={PlanScreen}
+          options={{
+            title: "Essenplan",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="Neues Gericht"
+          component={NewDishScreen}
+          options={{
+            title: "Neues Gericht",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -63,50 +84,50 @@ export default function App() {
 // HOME_SCREEN
 const HomeScreen = ({ navigation }) => {
   return (
-      <View style={styles.container}>
-        <Image style={styles.logo} source={mensa_logo} />
-        <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Essensplan")}
-        >
-          <Text style={styles.buttontxt}>Essensplan</Text>
-        </Pressable>
-        <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Kalender")}
-        >
-          <Text style={styles.buttontxt}>Kalender</Text>
-        </Pressable>
-        <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Gerichte")}
-        >
-          <Text style={styles.buttontxt}>Gerichte</Text>
-        </Pressable>
-      </View>
+    <View style={styles.container}>
+      <Image style={styles.logo} source={mensa_logo} />
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Essensplan")}
+      >
+        <Text style={styles.buttontxt}>Essensplan</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Kalender")}
+      >
+        <Text style={styles.buttontxt}>Kalender</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Gerichte")}
+      >
+        <Text style={styles.buttontxt}>Gerichte</Text>
+      </Pressable>
+    </View>
   );
 };
 
 //CALENDAR_SCREEN
 const CalendarScreen = ({ navigation }) => {
   return (
-      <View style={styles.container}>
-        <WeeklyCalendar style={styles.calendar} />
-      </View>
+    <View style={styles.container}>
+      <WeeklyCalendar style={styles.calendar} />
+    </View>
   );
 };
 
 //DISHES_SCREEN
 const DishesScreen = ({ navigation }) => {
   return (
-      <View style={styles.container}>
-        <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Neues Gericht")}
-        >
-          <Text style={styles.buttontxt}>Hinzufügen</Text>
-        </Pressable>
-      </View>
+    <View style={styles.container}>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Neues Gericht")}
+      >
+        <Text style={styles.buttontxt}>Hinzufügen</Text>
+      </Pressable>
+    </View>
   );
 };
 
@@ -114,35 +135,35 @@ const DishesScreen = ({ navigation }) => {
 const NewDishScreen = ({ navigation }) => {
   const [foodtype, setFoodtype] = useState("Fleisch");
   return (
-      <View style={styles.container}>
-        <View>
-          <TextInput style={styles.formInput} placeholder="Name" />
-          <TextInput style={styles.formInput} placeholder="Preis" />
-          <Picker
-              selectedValue={foodtype}
-              onValueChange={(currentFoodtype) => setFoodtype(currentFoodtype)}
-          >
-            <Picker.Item label="Fleisch" value="Fleisch" />
-            <Picker.Item label="Vegetarisch" value="Vegetarisch" />
-            <Picker.Item label="Vegan" value="Vegan" />
-          </Picker>
-          <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("Gerichte")}
-          >
-            <Text style={styles.buttontxt}>Hinzufügen</Text>
-          </Pressable>
-        </View>
+    <View style={styles.container}>
+      <View>
+        <TextInput style={styles.formInput} placeholder="Name" />
+        <TextInput style={styles.formInput} placeholder="Preis" />
+        <Picker
+          selectedValue={foodtype}
+          onValueChange={(currentFoodtype) => setFoodtype(currentFoodtype)}
+        >
+          <Picker.Item label="Fleisch" value="Fleisch" />
+          <Picker.Item label="Vegetarisch" value="Vegetarisch" />
+          <Picker.Item label="Vegan" value="Vegan" />
+        </Picker>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>Hinzufügen</Text>
+        </Pressable>
       </View>
+    </View>
   );
 };
 
 //PLAN_SCREEN
 const PlanScreen = ({ navigation }) => {
   return (
-      <View>
-        <Text>Essensplan</Text>
-      </View>
+    <View>
+      <Text>Essensplan</Text>
+    </View>
   );
 };
 
