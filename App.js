@@ -108,25 +108,27 @@ const DishesScreen = ({ navigation }) => {
 
 //NEW_DISH_SCREEN
 const NewDishScreen = ({ navigation }) => {
-  const [currency, setCurrency] = useState("US Dollar");
+  const [foodtype, setFoodtype] = useState("Fleisch");
   return (
     <View>
-      <Text> Demo Form </Text>
       <View>
-        <TextInput placeholder="Email" />
-        <TextInput secureTextEntry={true} placeholder="Password" />
+        <TextInput style={styles.inputStyle} placeholder="Name" />
+        <TextInput style={styles.inputStyle} placeholder="Preis" />
         <Picker
-          selectedValue={currency}
-          onValueChange={(currentCurrency) => setCurrency(currentCurrency)}
+          selectedValue={foodtype}
+          onValueChange={(currentFoodtype) => setFoodtype(currentFoodtype)}
         >
-          <Picker.Item label="Schwein" value="Schwein" />
-          <Picker.Item label="Rind" value="Rind" />
-          <Picker.Item label="Huhn" value="Huhn" />
-          <Picker.Item label="Fisch" value="Fisch" />
+          <Picker.Item label="Schwein" value="Fleisch" />
           <Picker.Item label="Vegetarisch" value="Vegetarisch" />
           <Picker.Item label="Vegan" value="Vegan" />
         </Picker>
-        <Text>Selected: {currency}</Text>
+        <Text>Selected: {foodtype}</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>Gericht hinzufügen</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -197,10 +199,10 @@ const styles = StyleSheet.create({
   inputStyle: {
     marginTop: 20,
     width: 300,
-    height: 40,
+    height: 100,
     paddingHorizontal: 10,
     borderRadius: 50,
-    backgroundColor: "#b9e4c9",
+    backgroundColor: "#24a0ed",
   },
   formText: {
     alignItems: "center",
