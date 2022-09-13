@@ -100,7 +100,7 @@ const DishesScreen = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate("Neues Gericht")}
       >
-        <Text style={styles.buttontxt}>Gericht hinzufügen</Text>
+        <Text style={styles.buttontxt}>Hinzufügen</Text>
       </Pressable>
     </View>
   );
@@ -110,10 +110,10 @@ const DishesScreen = ({ navigation }) => {
 const NewDishScreen = ({ navigation }) => {
   const [foodtype, setFoodtype] = useState("Fleisch");
   return (
-    <View>
+    <View style={styles.container}>
       <View>
-        <TextInput style={styles.inputStyle} placeholder="Name" />
-        <TextInput style={styles.inputStyle} placeholder="Preis" />
+        <TextInput style={styles.formInput} placeholder="Name" />
+        <TextInput style={styles.formInput} placeholder="Preis" />
         <Picker
           selectedValue={foodtype}
           onValueChange={(currentFoodtype) => setFoodtype(currentFoodtype)}
@@ -126,7 +126,7 @@ const NewDishScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
         >
-          <Text style={styles.buttontxt}>Gericht hinzufügen</Text>
+          <Text style={styles.buttontxt}>Hinzufügen</Text>
         </Pressable>
       </View>
     </View>
@@ -149,12 +149,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-  },
-
-  headTxt: {
-    color: "#fff",
-    fontSize: 32,
-    padding: 16,
   },
 
   button: {
@@ -191,11 +185,13 @@ const styles = StyleSheet.create({
     themeColor: "#24a0ed",
     color: "#24a0ed",
   },
+
   formLabel: {
     fontSize: 20,
     color: "#fff",
   },
-  inputStyle: {
+
+  formInput: {
     marginTop: 20,
     width: 300,
     height: 50,
