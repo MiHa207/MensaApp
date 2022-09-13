@@ -55,19 +55,29 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Essensplan"
-          component={PlanScreen}
+          name="Neues Gericht"
+          component={NewDishScreen}
           options={{
-            title: "Essenplan",
+            title: "Neues Gericht",
             headerTitleStyle: { color: "#efaa47" },
             headerTitleAlign: "center",
           }}
         />
         <Stack.Screen
-          name="Neues Gericht"
-          component={NewDishScreen}
+          name="Essenspläne"
+          component={PlansScreen}
           options={{
-            title: "Neues Gericht",
+            title: "Essenspläne",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+
+        <Stack.Screen
+          name="Neuer Plan"
+          component={NewPlanScreen}
+          options={{
+            title: "Neuer Plan",
             headerTitleStyle: { color: "#efaa47" },
             headerTitleAlign: "center",
           }}
@@ -86,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("Essensplan")}
+        onPress={() => navigation.navigate("Essenspläne")}
       >
         <Text style={styles.buttontxt}>Essensplan</Text>
       </Pressable>
@@ -157,14 +167,67 @@ const NewDishScreen = ({ navigation }) => {
 };
 
 //PLAN_SCREEN
-const PlanScreen = ({ navigation }) => {
+const PlansScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>Essensplan</Text>
+    <View style={styles.container}>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Neuer Plan")}
+      >
+        <Text style={styles.buttontxt}>Hinzufügen</Text>
+      </Pressable>
     </View>
   );
 };
-
+const NewPlanScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.formText}>Montag</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>+</Text>
+        </Pressable>
+        <Text style={styles.formText}>Dienstag</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>+</Text>
+        </Pressable>
+        <Text style={styles.formText}>Mittowch</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>+</Text>
+        </Pressable>
+        <Text style={styles.formText}>Donnerstag</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>+</Text>
+        </Pressable>
+        <Text style={styles.formText}>Freitag</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Gerichte")}
+        >
+          <Text style={styles.buttontxt}>+</Text>
+        </Pressable>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Essenspläne")}
+        >
+          <Text style={styles.buttontxt}>Hinzufügen</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
 // <<<<<STYLES>>>>>
 
 const styles = StyleSheet.create({
@@ -172,12 +235,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1e1e1e",
     alignItems: "center",
-  },
-
-  headTxt: {
-    color: "#1e1e1e",
-    fontSize: 32,
-    padding: 16,
   },
 
   button: {
