@@ -1,5 +1,15 @@
 {
     "translation":{
-        "EssensplanText": "Menu"
+        "Essensplan": "Menu",
+        "Kalender": "Calender",
+        "Anmelden": "Sign In",
+        "Gerichte": "Dishes",
+        "Abmelden": "Sign Out",
+        "Hinzufügen": "Add",
+        "Montag": "Monday",
+        "Dienstag": "Tuesday",
+        "Mittwoch": "Wednesday",
+        "Donnerstag": "Thursday",
+        "Freitag": "Friday"
     }
-}    
+}

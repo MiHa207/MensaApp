@@ -4843,7 +4843,7 @@
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.4.0.tgz"
   "version" "1.4.0"
 
-"expo@*", "expo@^46.0.0":
+"expo@*", "expo@^46.0.10":
   "integrity" "sha512-MUDLTnBYOOabzFo2HATTMXiAYoQ4n1IWBM3HlOmsQVoMBKOs6FcZDqte/lwK80KkhHIpr1Q37JD8Dq1Fk4b9eA=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-46.0.10.tgz"
   "version" "46.0.10"

@@ -25,8 +25,9 @@ import {useTranslation} from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
 const options = [
+  {label: "Deutsch", value: "de"},
   {label: "English", value: 'en'},
-  {label: "German", value: "de"},
+  
   ];
 
 // <<<<<NAVIGATION>>>>>
@@ -125,6 +126,7 @@ export default function App() {
 
 // HOME_SCREEN
 const HomeScreen = ({ navigation }) => {
+  const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
       
@@ -133,19 +135,30 @@ const HomeScreen = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate("Kalender")}
       >
-        <Text style={styles.buttontxt}>Kalender</Text>
+        <Text style={styles.buttontxt}>{t("Kalender")}</Text>
       </Pressable>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Login")}
       >
-        <Text style={styles.buttontxt}>Login</Text>
+        <Text style={styles.buttontxt}>{t("Anmelden")}</Text>
       </Pressable>
+      <SwitchSelector options={options} hasPadding inital={0}
+      onPress={(language)=> {
+        i18n.changeLanguage(language);
+        }}
+        textColor={"#efaa47"} 
+  selectedColor={"#000000"}
+  buttonColor={"#efaa47"}
+  borderColor={"#efaa47"} 
+  backgroundColor={"#1e1e1e"} 
+        />
     </View>
   );
 };
 // admin screen 
 const AdminScreen = ({ navigation }) => {
+  
   const handleSignOut = () => {
     auth
       .signOut()
@@ -159,37 +172,42 @@ const AdminScreen = ({ navigation }) => {
   const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
-      <SwitchSelector options={options} hasPadding inital={0}
-      onPress={(language)=> {
-        i18n.changeLanguage(language);
-        }}
-        />
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Essenspläne")}
       >
-        <Text style={styles.buttontxt}>{t("EssensplanText")}</Text>
+        <Text style={styles.buttontxt}>{t("Essensplan")}</Text>
       </Pressable>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Kalender")}
       >
-        <Text style={styles.buttontxt}>Kalender</Text>
+        <Text style={styles.buttontxt}>{t("Kalender")}</Text>
       </Pressable>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Gerichte")}
       >
-        <Text style={styles.buttontxt}>Gerichte</Text>
+        <Text style={styles.buttontxt}>{t("Gerichte")}</Text>
       </Pressable>
 
       <TouchableOpacity
         onPress={handleSignOut}
         style={styles.button}
       >
-        <Text style={styles.buttonText}>Sign out</Text>
+        <Text style={styles.buttonText}>{t("Abmelden")}</Text>
       </TouchableOpacity>
+      <SwitchSelector options={options} hasPadding inital={0}
+      onPress={(language)=> {
+        i18n.changeLanguage(language);
+        }}
+        textColor={"#efaa47"} 
+  selectedColor={"#000000"}
+  buttonColor={"#efaa47"}
+  borderColor={"#efaa47"} 
+  backgroundColor={"#1e1e1e"} 
+  />
     </View>
   );
 };
@@ -223,7 +241,7 @@ const LoginScreen = () => {
       })
       .catch(error => alert(error.message))
   }
-
+  const {t,i18n}=useTranslation();
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -250,7 +268,7 @@ const LoginScreen = () => {
           onPress={handleLogin}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>{t("Anmelden")}</Text>
         </TouchableOpacity>
        
           
@@ -316,6 +334,7 @@ const DishesScreen = ({ navigation }) => {
   const [listItems, setListItems] = useState(dummyArray);
 
   const ItemView = ({ item }) => {
+    const {t,i18n}=useTranslation();
     return (
       // FlatList Item
       <View>
@@ -346,7 +365,7 @@ const DishesScreen = ({ navigation }) => {
 
     alert("Id: " + item.id + " Value: " + item.value);
   };
-
+  const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
       <FlatList
@@ -363,7 +382,7 @@ const DishesScreen = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate("Neues Gericht")}
       >
-        <Text style={styles.buttontxt}>Hinzufügen</Text>
+        <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
       </Pressable>
     </View>
   );
@@ -372,6 +391,7 @@ const DishesScreen = ({ navigation }) => {
 //NEW_DISH_SCREEN
 const NewDishScreen = ({ navigation }) => {
   const [foodtype, setFoodtype] = useState("Fleisch");
+  const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
       <View>
@@ -382,7 +402,7 @@ const NewDishScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
         >
-          <Text style={styles.buttontxt}>Hinzufügen</Text>
+          <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
         </Pressable>
       </View>
     </View>
@@ -397,44 +417,45 @@ const PlansScreen = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate("Neuer Plan")}
       >
-        <Text style={styles.buttontxt}>Hinzufügen</Text>
+        <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
       </Pressable>
     </View>
   );
 };
 const NewPlanScreen = ({ navigation }) => {
+  const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.formText}>Montag</Text>
+        <Text style={styles.formText}>{t("Montag")}</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
-        <Text style={styles.formText}>Dienstag</Text>
+        <Text style={styles.formText}>{t("Dienstag")}</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
-        <Text style={styles.formText}>Mittowch</Text>
+        <Text style={styles.formText}>{t("Mittwoch")}</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
-        <Text style={styles.formText}>Donnerstag</Text>
+        <Text style={styles.formText}>{t("Donnerstag")}</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
-        <Text style={styles.formText}>Freitag</Text>
+        <Text style={styles.formText}>{t("Freitag")}</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
@@ -445,7 +466,7 @@ const NewPlanScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Essenspläne")}
         >
-          <Text style={styles.buttontxt}>Hinzufügen</Text>
+          <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
         </Pressable>
       </View>
     </View>
