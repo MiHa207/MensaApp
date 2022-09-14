@@ -28,6 +28,7 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: { backgroundColor: "#1e1e1e" },
+            headerTintColor:"#efaa47"
         }}
       >
         <Stack.Screen
@@ -443,7 +444,6 @@ const styles = StyleSheet.create({
 
   calendar: {
     height: 600,
-    themeColor: "#efaa47",
     color: "#efaa47",
   },
 
