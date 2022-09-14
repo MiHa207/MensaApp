@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -8,12 +8,15 @@ import {
   TextInput,
   SafeAreaView,
   FlatList,
+  KeyboardAvoidingView, TextInput, TouchableOpacity,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mensa_logo from "./assets/background.jpg";
 import WeeklyCalendar from "react-native-weekly-calendar";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from '@react-navigation/core'
+import { auth } from './firebase'
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +34,24 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={{
+            title: "MensaApp",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+         <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            title: "Login",
+            headerTitleStyle: { color: "#efaa47" },
+            headerTitleAlign: "center",
+          }}
+        />
+         <Stack.Screen
+          name="Admin"
+          component={AdminScreen}
           options={{
             title: "MensaApp",
             headerTitleStyle: { color: "#efaa47" },
@@ -97,6 +118,26 @@ const HomeScreen = ({ navigation }) => {
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
+        onPress={() => navigation.navigate("Kalender")}
+      >
+        <Text style={styles.buttontxt}>Kalender</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Login")}
+      >
+        <Text style={styles.buttontxt}>Login</Text>
+      </Pressable>
+    </View>
+  );
+};
+// admin screen 
+const AdminScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Image style={styles.logo} source={mensa_logo} />
+      <Pressable
+        style={styles.button}
         onPress={() => navigation.navigate("Essenspläne")}
       >
         <Text style={styles.buttontxt}>Essensplan</Text>
@@ -116,6 +157,71 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+// Login>_SCREEN
+const LoginScreen = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace("Admin")
+      }
+    })
+
+    return unsubscribe
+  }, [])
+
+
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Logged in with:', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior="padding"
+    >
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+        />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={handleLogin}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+       
+          
+        
+      </View>
+    </KeyboardAvoidingView>
+  );
+};
+
 
 //CALENDAR_SCREEN
 const CalendarScreen = ({ navigation }) => {
