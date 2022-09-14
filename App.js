@@ -10,19 +10,31 @@ import {
   FlatList,
   KeyboardAvoidingView,
    TouchableOpacity,
+   Button
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Calendar from 'expo-calendar';
 import mensa_logo from "./assets/background.jpg";
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/core';
 import { auth } from "./firebase";
+import SwitchSelector from 'react-native-switch-selector';
+import i18next from "./languages/i18n";
+import {I18nextProvider} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
+const options = [
+  {label: "English", value: 'en'},
+  {label: "German", value: "de"},
+  ];
 
 // <<<<<NAVIGATION>>>>>
 
 export default function App() {
+  
   return (
+    <I18nextProvider i18n={i18next}>
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
@@ -105,6 +117,7 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </I18nextProvider>
   );
 }
 
@@ -114,6 +127,7 @@ export default function App() {
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
@@ -140,16 +154,22 @@ const AdminScreen = ({ navigation }) => {
       })
       .catch(error => alert(error.message))
   }
+  
 
-
+  const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
+      <SwitchSelector options={options} hasPadding inital={0}
+      onPress={(language)=> {
+        i18n.changeLanguage(language);
+        }}
+        />
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Essenspläne")}
       >
-        <Text style={styles.buttontxt}>Essensplan</Text>
+        <Text style={styles.buttontxt}>{t("EssensplanText")}</Text>
       </Pressable>
       <Pressable
         style={styles.button}
@@ -243,12 +263,47 @@ const LoginScreen = () => {
 
 //CALENDAR_SCREEN
 function CalendarScreen({ navigation }) {
+  useEffect(() => {
+    (async () => {
+      const { status } = await Calendar.requestCalendarPermissionsAsync();
+      if (status === 'granted') {
+        const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+        console.log('Here are all your calendars:');
+        console.log({ calendars });
+      }
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <WeeklyCalendar style={styles.calendar} />
+      <Text>Calendar Module Example</Text>
+      <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
   );
-};
+}
+
+async function getDefaultCalendarSource() {
+  const defaultCalendar = await Calendar.getDefaultCalendarAsync();
+  return defaultCalendar.source;
+}
+
+async function createCalendar() {
+  const defaultCalendarSource =
+    Platform.OS === 'ios'
+      ? await getDefaultCalendarSource()
+      : { isLocalAccount: true, name: 'Expo Calendar' };
+  const newCalendarID = await Calendar.createCalendarAsync({
+    title: 'Expo Calendar',
+    color: 'blue',
+    entityType: Calendar.EntityTypes.EVENT,
+    sourceId: defaultCalendarSource.id,
+    source: defaultCalendarSource,
+    name: 'internalCalendarName',
+    ownerAccount: 'personal',
+    accessLevel: Calendar.CalendarAccessLevel.OWNER,
+  });
+  console.log(`Your new calendar ID is: ${newCalendarID}`);
+}
 
 //DISHES_SCREEN
 const dummyArray = [
@@ -322,14 +377,7 @@ const NewDishScreen = ({ navigation }) => {
       <View>
         <TextInput style={styles.formInput} placeholder="Name" />
         <TextInput style={styles.formInput} placeholder="Preis" />
-        <Picker
-          selectedValue={foodtype}
-          onValueChange={(currentFoodtype) => setFoodtype(currentFoodtype)}
-        >
-          <Picker.Item label="Fleisch" value="Fleisch" />
-          <Picker.Item label="Vegetarisch" value="Vegetarisch" />
-          <Picker.Item label="Vegan" value="Vegan" />
-        </Picker>
+        
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Gerichte")}
