@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "MensaApp",
-    "slug": "MensaApp",
+    "name": "FirebaseAuth",
+    "slug": "FirebaseAuth",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

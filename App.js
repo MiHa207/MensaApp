@@ -8,15 +8,14 @@ import {
   TextInput,
   SafeAreaView,
   FlatList,
-  KeyboardAvoidingView, TextInput, TouchableOpacity,
+  KeyboardAvoidingView,
+   TouchableOpacity,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mensa_logo from "./assets/background.jpg";
-import WeeklyCalendar from "react-native-weekly-calendar";
-import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from '@react-navigation/core'
-import { auth } from './firebase'
+import { auth } from "./firebase";
 
 const Stack = createNativeStackNavigator();
 
@@ -133,6 +132,16 @@ const HomeScreen = ({ navigation }) => {
 };
 // admin screen 
 const AdminScreen = ({ navigation }) => {
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login")
+      })
+      .catch(error => alert(error.message))
+  }
+
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={mensa_logo} />
@@ -154,10 +163,19 @@ const AdminScreen = ({ navigation }) => {
       >
         <Text style={styles.buttontxt}>Gerichte</Text>
       </Pressable>
+
+      <TouchableOpacity
+        onPress={handleSignOut}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Sign out</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
 // Login>_SCREEN
+
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -167,7 +185,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.replace("Admin")
+        navigation.navigate("Admin")
       }
     })
 
@@ -224,7 +242,7 @@ const LoginScreen = () => {
 
 
 //CALENDAR_SCREEN
-const CalendarScreen = ({ navigation }) => {
+function CalendarScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <WeeklyCalendar style={styles.calendar} />
@@ -463,4 +481,39 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
+//login
+buttonOutline: {
+  backgroundColor: 'white',
+  marginTop: 5,
+  borderColor: '#0782F9',
+  borderWidth: 2,
+},
+buttonText: {
+  color: 'white',
+  fontWeight: '700',
+  fontSize: 16,
+},
+buttonOutlineText: {
+  color: '#0782F9',
+  fontWeight: '700',
+  fontSize: 16,
+},
+inputContainer: {
+  width: '80%'
+},
+input: {
+  backgroundColor: 'white',
+  paddingHorizontal: 15,
+  paddingVertical: 10,
+  borderRadius: 10,
+  marginTop: 5,
+},
+buttonContainer: {
+  width: '60%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: 40,},
+
+
+
 });
