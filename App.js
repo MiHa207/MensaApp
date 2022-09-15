@@ -12,6 +12,7 @@ import {
    TouchableOpacity,
    Button,
    Alert,
+    StatusBar
    
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -48,6 +49,7 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: { backgroundColor: "#1e1e1e" },
+            headerTintColor:'#efaa47'
         }}
       >
         <Stack.Screen
@@ -399,7 +401,7 @@ const DishesScreen = ({ navigation }) => {
   const ListItem = ({ dish }) => {
     return (
       <View style={styles.listItem}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 2 }}>
           <TouchableOpacity onPress={() => getDishesFromUserDevice(dish.id)}>
           <Text
            style={{
@@ -408,7 +410,7 @@ const DishesScreen = ({ navigation }) => {
              fontSize: 15,
              textDecorationLine: dish?.completed ? 'line-through' : 'yes',
            }}>
-           Name: {dish?.task}
+              Name: {dish?.task}
          </Text>
         
           <Text
@@ -418,7 +420,7 @@ const DishesScreen = ({ navigation }) => {
               color: COLORS.primary,
               textDecorationLine: dish?.completed ? 'line-through' : 'yes',
             }}>
-            Preis: {dish?.price}
+              Preis: <Text>{dish?.price}</Text>
           </Text>
           <Text
             style={{
@@ -427,7 +429,7 @@ const DishesScreen = ({ navigation }) => {
               color: COLORS.primary,
               textDecorationLine: dish?.completed ? 'line-through' : 'yes',
             }}>
-            Art:{dish?.art}
+              Art:<Text>{dish?.art}</Text>
             
           </Text>
           </TouchableOpacity>
@@ -435,7 +437,7 @@ const DishesScreen = ({ navigation }) => {
 
         <TouchableOpacity onPress={() => deleteDish(dish.id)}>
           <View style={styles.actionIcon}>
-            <Icon name="delete" size={20} color="white" />
+            <Icon name="delete" size={20} color="#efaa47" />
           </View>
         </TouchableOpacity>
       </View>
@@ -487,7 +489,7 @@ const DishesScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity onPress={addDish}>
           <View style={styles.iconContainer}>
-            <Icon name="add" color='green' size={30} />
+            <Icon name="add" color='#efaa47' size={30} />
           </View>
         </TouchableOpacity>
       </View>
@@ -597,23 +599,33 @@ const styles = StyleSheet.create({
     width: '100%',
     
     alignItems: 'center',
-    paddingHorizontal: 20,},
+    paddingHorizontal: 20,
+  },
+
     actionIcon: {
       height: 25,
       width: 25,
-      backgroundColor: "green",
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'black',
+      backgroundColor: '#1e1e1e',
       marginLeft: 5,
-      borderRadius: 3,},
+      borderRadius: 3,
+      marginVertical:12
+    },
     listItem: {
         padding: 20,
-        backgroundColor: 'grey',
+        backgroundColor: 'transparent',
         flexDirection: 'row',
         elevation: 12,
         borderRadius: 7,
-        marginVertical: 10,},
+        marginVertical: 10,
+        alignSelf:"center",
+        width:400,
+        height:98,
+        borderWidth: 1,
+        borderColor:'#efaa47'
+
+    },
 
   container: {
     flex: 1,
@@ -648,6 +660,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:15,
   },
 
   logo: {
@@ -693,6 +706,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: "#fff",
     fontSize: 20,
+      textAlign:"center"
   },
   item: {
     padding: 10,
@@ -710,6 +724,7 @@ buttonText: {
   color: 'white',
   fontWeight: '700',
   fontSize: 16,
+
 },
 buttonOutlineText: {
   color: '#0782F9',
