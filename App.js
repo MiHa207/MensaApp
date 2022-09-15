@@ -12,11 +12,9 @@ import {
   TouchableOpacity,
   Button,
   Alert,
-  StatusBar,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as Calendar from "expo-calendar";
 import mensa_logo from "./assets/background.jpg";
 import { useNavigation } from "@react-navigation/core";
 import { auth } from "./firebase";
@@ -28,6 +26,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { t } from "i18next";
 import DropDownPicker from "react-native-dropdown-picker";
+import WeeklyCalendar from "react-native-weekly-calendar";
 
 const Stack = createNativeStackNavigator();
 const options = [
@@ -277,13 +276,13 @@ const LoginScreen = () => {
 };
 
 //CALENDAR_SCREEN
-function CalendarScreen({ navigation }) {
+const CalendarScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Calendar Module Example</Text>
+      <WeeklyCalendar style={{ height: 400 }} />
     </View>
   );
-}
+};
 
 //DISHES_SCREEN
 const DishesScreen = ({ navigation }) => {
@@ -377,7 +376,7 @@ const DishesScreen = ({ navigation }) => {
                 textDecorationLine: dish?.completed ? "line-through" : "yes",
               }}
             >
-              Art:<Text>{dish?.art}</Text>
+              Art: <Text>{dish?.art}</Text>
             </Text>
           </TouchableOpacity>
         </View>
