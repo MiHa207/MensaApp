@@ -10,7 +10,9 @@ import {
   FlatList,
   KeyboardAvoidingView,
    TouchableOpacity,
-   Button
+   Button,
+   Alert,
+   
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -24,6 +26,9 @@ import {I18nextProvider} from 'react-i18next';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { t } from "i18next";
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 const Stack = createNativeStackNavigator();
 const options = [
@@ -31,7 +36,7 @@ const options = [
   {label: "English", value: 'en'},
   
   ];
-
+  const COLORS = { back: '#1e1e1e', primary: '#efaa47', was: 'yellow' };
 // <<<<<NAVIGATION>>>>>
 
 export default function App() {
@@ -331,8 +336,11 @@ async function createCalendar() {
 
 //DISHES_SCREEN
 const DishesScreen = ({ navigation }) => {
+  
   const [todos, setTodos] = React.useState([]);
   const [textInput, setTextInput] = React.useState('');
+  const [priceInput, setPriceInput] = React.useState('');
+  const [artInput, setArtInput] = React.useState('');
 
   React.useEffect(() => {
     getTodosFromUserDevice();
@@ -343,16 +351,20 @@ const DishesScreen = ({ navigation }) => {
   }, [todos]);
 
   const addTodo = () => {
-    if (textInput == '') {
+    if (textInput & priceInput  == '') {
       Alert.alert('Error', 'Please input item');
     } else {
       const newTodo = {
         id: Math.random(),
         task: textInput,
+        price: priceInput,
+        art:artInput,
         completed: false,
       };
       setTodos([...todos, newTodo]);
       setTextInput('');
+      setPriceInput('');
+      setArtInput('');
     }
   };
 
@@ -391,10 +403,31 @@ const DishesScreen = ({ navigation }) => {
           <Text
             style={{
               fontWeight: 'bold',
+              color: COLORS.primary,
               fontSize: 15,
-              textDecorationLine: todo?.completed ? 'line-through' : 'none',
+              textDecorationLine: todo?.completed ? 'line-through' : 'yes',
             }}>
-            {todo?.task}
+            Name:{todo?.task}
+            {todo?.price}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              color: COLORS.primary,
+              textDecorationLine: todo?.completed ? 'line-through' : 'yes',
+            }}>
+            Preis:{todo?.price}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              color: COLORS.primary,
+              textDecorationLine: todo?.completed ? 'line-through' : 'yes',
+            }}>
+            Art:{todo?.art}
+            
           </Text>
         </View>
 
@@ -410,35 +443,56 @@ const DishesScreen = ({ navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        
+        backgroundColor: COLORS.back,
       }}>
       
-      <View style={styles.container}>
-        <View style={styles.innerContainer}>
+      <View style={styles.inputSection}>
+        <View style={styles.formInput}>
           <TextInput
             value={textInput}
-            color='white'
+            enablesReturnKeyAutomatically
+            numberOfLines={2}
+            color={COLORS.primary}
             placeholder="Name"
             onChangeText={text => setTextInput(text)}
           />
+          </View>
+          <View style={styles.formInput}>
+          <TextInput
+            value={priceInput}
+            enablesReturnKeyAutomatically
+            numberOfLines={2}
+            color={COLORS.primary}
+            placeholder="Price"
+            onChangeText={price => setPriceInput(price)}
+          />
+          
+        
+      
+        </View> 
+        <View style={styles.formInput}>
+          <TextInput
+            value={artInput}
+            enablesReturnKeyAutomatically
+            numberOfLines={2}
+            color = {COLORS.primary}
+            placeholder="Art"
+            onChangeText={art => setArtInput(art)}
+          />
+          
+        
+      
         </View>
         <TouchableOpacity onPress={addTodo}>
           <View style={styles.iconContainer}>
-            <Icon name="add" color='black' size={30} />
+            <Icon name="add" color='green' size={30} />
           </View>
         </TouchableOpacity>
       </View>
 
-
-
-
-
-
-
-
       <FlatList
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
+        contentContainerStyle={{ padding: 20, paddingBottom: 50 }}
         data={todos}
         renderItem={({ item }) => <ListItem todo={item} />}
       />
@@ -537,6 +591,28 @@ const NewPlanScreen = ({ navigation }) => {
 // <<<<<STYLES>>>>>
 
 const styles = StyleSheet.create({
+  inputSection: {
+    width: '100%',
+    
+    alignItems: 'center',
+    paddingHorizontal: 20,},
+    actionIcon: {
+      height: 25,
+      width: 25,
+      backgroundColor: "green",
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'black',
+      marginLeft: 5,
+      borderRadius: 3,},
+    listItem: {
+        padding: 20,
+        backgroundColor: 'grey',
+        flexDirection: 'row',
+        elevation: 12,
+        borderRadius: 7,
+        marginVertical: 10,},
+
   container: {
     flex: 1,
     backgroundColor: "#1e1e1e",
@@ -561,6 +637,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "#f3f3f3",
+  },
+  iconContainer: {
+    height: 40,
+    width: 40,
+    backgroundColor: "white",
+    elevation: 40,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   logo: {
