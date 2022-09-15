@@ -22,6 +22,8 @@ import SwitchSelector from 'react-native-switch-selector';
 import i18next from "./languages/i18n";
 import {I18nextProvider} from 'react-i18next';
 import {useTranslation} from 'react-i18next';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const options = [
@@ -143,6 +145,9 @@ const HomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttontxt}>{t("Anmelden")}</Text>
       </Pressable>
+      <View style={ styles.selector
+
+}> 
       <SwitchSelector options={options} hasPadding inital={0}
       onPress={(language)=> {
         i18n.changeLanguage(language);
@@ -153,6 +158,7 @@ const HomeScreen = ({ navigation }) => {
   borderColor={"#efaa47"} 
   backgroundColor={"#1e1e1e"} 
         />
+        </View>
     </View>
   );
 };
@@ -198,16 +204,16 @@ const AdminScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>{t("Abmelden")}</Text>
       </TouchableOpacity>
+      <View style={styles.selector}> 
       <SwitchSelector options={options} hasPadding inital={0}
-      onPress={(language)=> {
-        i18n.changeLanguage(language);
-        }}
+      onPress={(language)=> {i18n.changeLanguage(language);}}
         textColor={"#efaa47"} 
-  selectedColor={"#000000"}
-  buttonColor={"#efaa47"}
-  borderColor={"#efaa47"} 
-  backgroundColor={"#1e1e1e"} 
+        selectedColor={"#000000"}
+        buttonColor={"#efaa47"}
+        borderColor={"#efaa47"} 
+        backgroundColor={"#1e1e1e"} 
   />
+  </View>
     </View>
   );
 };
@@ -324,67 +330,122 @@ async function createCalendar() {
 }
 
 //DISHES_SCREEN
-const dummyArray = [
-  { id: "1", value: "Dish1" },
-  { id: "2", value: "Dish2" },
-  { id: "3", value: "Dish3" },
-];
-
 const DishesScreen = ({ navigation }) => {
-  const [listItems, setListItems] = useState(dummyArray);
+  const [todos, setTodos] = React.useState([]);
+  const [textInput, setTextInput] = React.useState('');
 
-  const ItemView = ({ item }) => {
-    const {t,i18n}=useTranslation();
+  React.useEffect(() => {
+    getTodosFromUserDevice();
+  }, []);
+
+  React.useEffect(() => {
+    saveTodoToUserDevice(todos);
+  }, [todos]);
+
+  const addTodo = () => {
+    if (textInput == '') {
+      Alert.alert('Error', 'Please input item');
+    } else {
+      const newTodo = {
+        id: Math.random(),
+        task: textInput,
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
+      setTextInput('');
+    }
+  };
+
+  const saveTodoToUserDevice = async todos => {
+    try {
+      const stringifyTodos = JSON.stringify(todos);
+      await AsyncStorage.setItem('todos', stringifyTodos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTodosFromUserDevice = async () => {
+    try {
+      const todos = await AsyncStorage.getItem('todos');
+      if (todos != null) {
+        setTodos(JSON.parse(todos));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+  const deleteTodo = todoId => {
+    const newTodosItem = todos.filter(item => item.id != todoId);
+    setTodos(newTodosItem);
+  };
+
+
+  const ListItem = ({ todo }) => {
     return (
-      // FlatList Item
-      <View>
-        <Text style={styles.item} onPress={() => getItem(item)}>
-          {item.value}
-        </Text>
+      <View style={styles.listItem}>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 15,
+              textDecorationLine: todo?.completed ? 'line-through' : 'none',
+            }}>
+            {todo?.task}
+          </Text>
+        </View>
+
+        <TouchableOpacity onPress={() => deleteTodo(todo.id)}>
+          <View style={styles.actionIcon}>
+            <Icon name="delete" size={20} color="white" />
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
-
-  const ItemSeparatorView = () => {
-    return (
-      // FlatList Item Separator
-      <View
-        style={{
-          height: 0.5,
-
-          width: "100%",
-
-          backgroundColor: "#C8C8C8",
-        }}
-      />
-    );
-  };
-
-  const getItem = (item) => {
-    //Function for click on an item
-
-    alert("Id: " + item.id + " Value: " + item.value);
-  };
-  const {t,i18n}=useTranslation();
   return (
-    <View style={styles.container}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        
+      }}>
+      
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <TextInput
+            value={textInput}
+            color='white'
+            placeholder="Name"
+            onChangeText={text => setTextInput(text)}
+          />
+        </View>
+        <TouchableOpacity onPress={addTodo}>
+          <View style={styles.iconContainer}>
+            <Icon name="add" color='black' size={30} />
+          </View>
+        </TouchableOpacity>
+      </View>
+
+
+
+
+
+
+
+
       <FlatList
-        data={listItems}
-        //data defined in constructor
-
-        ItemSeparatorComponent={ItemSeparatorView}
-        //Item Separator View
-
-        renderItem={ItemView}
-        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
+        data={todos}
+        renderItem={({ item }) => <ListItem todo={item} />}
       />
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Neues Gericht")}
-      >
-        <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
-      </Pressable>
-    </View>
+      
+
+      
+    </SafeAreaView>
   );
 };
 
@@ -411,6 +472,7 @@ const NewDishScreen = ({ navigation }) => {
 
 //PLAN_SCREEN
 const PlansScreen = ({ navigation }) => {
+  const {t,i18n}=useTranslation();
   return (
     <View style={styles.container}>
       <Pressable
@@ -583,6 +645,11 @@ buttonContainer: {
   alignItems: 'center',
   marginTop: 40,},
 
+  selector:{
+    minWidth: 180,
+    maxWidth: '50%',
+    margin: 16,
+  }
 
 
 });
