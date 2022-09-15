@@ -337,51 +337,51 @@ async function createCalendar() {
 //DISHES_SCREEN
 const DishesScreen = ({ navigation }) => {
   
-  const [todos, setTodos] = React.useState([]);
+  const [dishes, setDishes] = React.useState([]);
   const [textInput, setTextInput] = React.useState('');
   const [priceInput, setPriceInput] = React.useState('');
   const [artInput, setArtInput] = React.useState('');
 
   React.useEffect(() => {
-    getTodosFromUserDevice();
+    getDishesFromUserDevice();
   }, []);
 
   React.useEffect(() => {
-    saveTodoToUserDevice(todos);
-  }, [todos]);
+    saveDishToUserDevice(dishes);
+  }, [dishes]);
 
-  const addTodo = () => {
+  const addDish = () => {
     if (textInput & priceInput  == '') {
       Alert.alert('Error', 'Please input item');
     } else {
-      const newTodo = {
+      const newDish = {
         id: Math.random(),
         task: textInput,
         price: priceInput,
         art:artInput,
         completed: false,
       };
-      setTodos([...todos, newTodo]);
+      setDishes([...dishes, newDish]);
       setTextInput('');
       setPriceInput('');
       setArtInput('');
     }
   };
 
-  const saveTodoToUserDevice = async todos => {
+  const saveDishToUserDevice = async dishes => {
     try {
-      const stringifyTodos = JSON.stringify(todos);
-      await AsyncStorage.setItem('todos', stringifyTodos);
+      const stringifyDishes = JSON.stringify(dishes);
+      await AsyncStorage.setItem('dishes', stringifyDishes);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getTodosFromUserDevice = async () => {
+  const getDishesFromUserDevice = async () => {
     try {
-      const todos = await AsyncStorage.getItem('todos');
-      if (todos != null) {
-        setTodos(JSON.parse(todos));
+      const dishes = await AsyncStorage.getItem('dishes');
+      if (dishes != null) {
+        setDishes(JSON.parse(dishes));
       }
     } catch (error) {
       console.log(error);
@@ -390,48 +390,50 @@ const DishesScreen = ({ navigation }) => {
 
 
 
-  const deleteTodo = todoId => {
-    const newTodosItem = todos.filter(item => item.id != todoId);
-    setTodos(newTodosItem);
+  const deleteDish = dishId => {
+    const newDishesItem = dishes.filter(item => item.id != dishId);
+    setDishes(newDishesItem);
   };
 
 
-  const ListItem = ({ todo }) => {
+  const ListItem = ({ dish }) => {
     return (
       <View style={styles.listItem}>
         <View style={{ flex: 1 }}>
+          <TouchableOpacity onPress={() => getDishesFromUserDevice(dish.id)}>
+          <Text
+           style={{
+             fontWeight: 'bold',
+             color: COLORS.primary,
+             fontSize: 15,
+             textDecorationLine: dish?.completed ? 'line-through' : 'yes',
+           }}>
+           Name: {dish?.task}
+         </Text>
+        
           <Text
             style={{
               fontWeight: 'bold',
-              color: COLORS.primary,
               fontSize: 15,
-              textDecorationLine: todo?.completed ? 'line-through' : 'yes',
+              color: COLORS.primary,
+              textDecorationLine: dish?.completed ? 'line-through' : 'yes',
             }}>
-            Name:{todo?.task}
-            {todo?.price}
+            Preis: {dish?.price}
           </Text>
           <Text
             style={{
               fontWeight: 'bold',
               fontSize: 15,
               color: COLORS.primary,
-              textDecorationLine: todo?.completed ? 'line-through' : 'yes',
+              textDecorationLine: dish?.completed ? 'line-through' : 'yes',
             }}>
-            Preis:{todo?.price}
-          </Text>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 15,
-              color: COLORS.primary,
-              textDecorationLine: todo?.completed ? 'line-through' : 'yes',
-            }}>
-            Art:{todo?.art}
+            Art:{dish?.art}
             
           </Text>
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={() => deleteTodo(todo.id)}>
+        <TouchableOpacity onPress={() => deleteDish(dish.id)}>
           <View style={styles.actionIcon}>
             <Icon name="delete" size={20} color="white" />
           </View>
@@ -483,7 +485,7 @@ const DishesScreen = ({ navigation }) => {
         
       
         </View>
-        <TouchableOpacity onPress={addTodo}>
+        <TouchableOpacity onPress={addDish}>
           <View style={styles.iconContainer}>
             <Icon name="add" color='green' size={30} />
           </View>
@@ -493,8 +495,8 @@ const DishesScreen = ({ navigation }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ padding: 20, paddingBottom: 50 }}
-        data={todos}
-        renderItem={({ item }) => <ListItem todo={item} />}
+        data={dishes}
+        renderItem={({ item }) => <ListItem dish={item} />}
       />
       
 
