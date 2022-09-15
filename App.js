@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -9,124 +9,120 @@ import {
   SafeAreaView,
   FlatList,
   KeyboardAvoidingView,
-   TouchableOpacity,
-   Button,
-   Alert,
-    StatusBar
-   
+  TouchableOpacity,
+  Button,
+  Alert,
+  StatusBar,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as Calendar from 'expo-calendar';
+import * as Calendar from "expo-calendar";
 import mensa_logo from "./assets/background.jpg";
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from "@react-navigation/core";
 import { auth } from "./firebase";
-import SwitchSelector from 'react-native-switch-selector';
+import SwitchSelector from "react-native-switch-selector";
 import i18next from "./languages/i18n";
-import {I18nextProvider} from 'react-i18next';
-import {useTranslation} from 'react-i18next';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { I18nextProvider } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { t } from "i18next";
-import DropDownPicker from 'react-native-dropdown-picker';
-
+import DropDownPicker from "react-native-dropdown-picker";
 
 const Stack = createNativeStackNavigator();
 const options = [
-  {label: "Deutsch", value: "de"},
-  {label: "English", value: 'en'},
-  
-  ];
-  const COLORS = { back: '#1e1e1e', primary: '#efaa47', was: 'yellow' };
+  { label: "Deutsch", value: "de" },
+  { label: "English", value: "en" },
+];
+const COLORS = { back: "#1e1e1e", primary: "#efaa47", was: "yellow" };
 // <<<<<NAVIGATION>>>>>
 
 export default function App() {
-  
   return (
     <I18nextProvider i18n={i18next}>
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: { backgroundColor: "#1e1e1e" },
-            headerTintColor:'#efaa47'
-        }}
-      >
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: "MensaApp",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerStyle: { backgroundColor: "#1e1e1e" },
+            headerTintColor: "#efaa47",
           }}
-        />
-         <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            title: "Login",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
-         <Stack.Screen
-          name="Admin"
-          component={AdminScreen}
-          options={{
-            title: "MensaApp",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="Kalender"
-          component={CalendarScreen}
-          options={{
-            title: "Kalenderwoche",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="Gerichte"
-          component={DishesScreen}
-          options={{
-            title: "Gerichte",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="Neues Gericht"
-          component={NewDishScreen}
-          options={{
-            title: "Neues Gericht",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="Essenspläne"
-          component={PlansScreen}
-          options={{
-            title: "Essenspläne",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
+        >
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              title: "MensaApp",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              title: "Login",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="Admin"
+            component={AdminScreen}
+            options={{
+              title: "MensaApp",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="Kalender"
+            component={CalendarScreen}
+            options={{
+              title: "Kalenderwoche",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="Gerichte"
+            component={DishesScreen}
+            options={{
+              title: "Gerichte",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="Gerichtauswahl"
+            component={ChooseDishesScreen}
+            options={{
+              title: "Gerichtauswahl",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+          <Stack.Screen
+            name="Essenspläne"
+            component={PlansScreen}
+            options={{
+              title: "Essenspläne",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
 
-        <Stack.Screen
-          name="Neuer Plan"
-          component={NewPlanScreen}
-          options={{
-            title: "Neuer Plan",
-            headerTitleStyle: { color: "#efaa47" },
-            headerTitleAlign: "center",
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="Neuer Plan"
+            component={NewPlanScreen}
+            options={{
+              title: "Neuer Plan",
+              headerTitleStyle: { color: "#efaa47" },
+              headerTitleAlign: "center",
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </I18nextProvider>
   );
 }
@@ -135,10 +131,9 @@ export default function App() {
 
 // HOME_SCREEN
 const HomeScreen = ({ navigation }) => {
-  const {t,i18n}=useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <View style={styles.container}>
-      
       <Image style={styles.logo} source={mensa_logo} />
       <Pressable
         style={styles.button}
@@ -152,37 +147,36 @@ const HomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttontxt}>{t("Anmelden")}</Text>
       </Pressable>
-      <View style={ styles.selector
-
-}> 
-      <SwitchSelector options={options} hasPadding inital={0}
-      onPress={(language)=> {
-        i18n.changeLanguage(language);
-        }}
-        textColor={"#efaa47"} 
-  selectedColor={"#000000"}
-  buttonColor={"#efaa47"}
-  borderColor={"#efaa47"} 
-  backgroundColor={"#1e1e1e"} 
+      <View style={styles.selector}>
+        <SwitchSelector
+          options={options}
+          hasPadding
+          inital={0}
+          onPress={(language) => {
+            i18n.changeLanguage(language);
+          }}
+          textColor={"#efaa47"}
+          selectedColor={"#000000"}
+          buttonColor={"#efaa47"}
+          borderColor={"#efaa47"}
+          backgroundColor={"#1e1e1e"}
         />
-        </View>
+      </View>
     </View>
   );
 };
-// admin screen 
+// admin screen
 const AdminScreen = ({ navigation }) => {
-  
   const handleSignOut = () => {
     auth
       .signOut()
       .then(() => {
-        navigation.replace("Login")
+        navigation.replace("Login");
       })
-      .catch(error => alert(error.message))
-  }
-  
+      .catch((error) => alert(error.message));
+  };
 
-  const {t,i18n}=useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={mensa_logo} />
@@ -205,22 +199,24 @@ const AdminScreen = ({ navigation }) => {
         <Text style={styles.buttontxt}>{t("Gerichte")}</Text>
       </Pressable>
 
-      <TouchableOpacity
-        onPress={handleSignOut}
-        style={styles.button}
-      >
+      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
         <Text style={styles.buttonText}>{t("Abmelden")}</Text>
       </TouchableOpacity>
-      <View style={styles.selector}> 
-      <SwitchSelector options={options} hasPadding inital={0}
-      onPress={(language)=> {i18n.changeLanguage(language);}}
-        textColor={"#efaa47"} 
-        selectedColor={"#000000"}
-        buttonColor={"#efaa47"}
-        borderColor={"#efaa47"} 
-        backgroundColor={"#1e1e1e"} 
-  />
-  </View>
+      <View style={styles.selector}>
+        <SwitchSelector
+          options={options}
+          hasPadding
+          inital={0}
+          onPress={(language) => {
+            i18n.changeLanguage(language);
+          }}
+          textColor={"#efaa47"}
+          selectedColor={"#000000"}
+          buttonColor={"#efaa47"}
+          borderColor={"#efaa47"}
+          backgroundColor={"#1e1e1e"}
+        />
+      </View>
     </View>
   );
 };
@@ -228,121 +224,73 @@ const AdminScreen = ({ navigation }) => {
 // Login>_SCREEN
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("Admin")
+        navigation.navigate("Admin");
       }
-    })
+    });
 
-    return unsubscribe
-  }, [])
-
-
+    return unsubscribe;
+  }, []);
 
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
+      .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log('Logged in with:', user.email);
+        console.log("Logged in with:", user.email);
       })
-      .catch(error => alert(error.message))
-  }
-  const {t,i18n}=useTranslation();
+      .catch((error) => alert(error.message));
+  };
+  const { t, i18n } = useTranslation();
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleLogin}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>{t("Anmelden")}</Text>
         </TouchableOpacity>
-       
-          
-        
       </View>
     </KeyboardAvoidingView>
   );
 };
 
-
 //CALENDAR_SCREEN
 function CalendarScreen({ navigation }) {
-  useEffect(() => {
-    (async () => {
-      const { status } = await Calendar.requestCalendarPermissionsAsync();
-      if (status === 'granted') {
-        const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
-        console.log('Here are all your calendars:');
-        console.log({ calendars });
-      }
-    })();
-  }, []);
-
   return (
     <View style={styles.container}>
       <Text>Calendar Module Example</Text>
-      <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
   );
 }
 
-async function getDefaultCalendarSource() {
-  const defaultCalendar = await Calendar.getDefaultCalendarAsync();
-  return defaultCalendar.source;
-}
-
-async function createCalendar() {
-  const defaultCalendarSource =
-    Platform.OS === 'ios'
-      ? await getDefaultCalendarSource()
-      : { isLocalAccount: true, name: 'Expo Calendar' };
-  const newCalendarID = await Calendar.createCalendarAsync({
-    title: 'Expo Calendar',
-    color: 'blue',
-    entityType: Calendar.EntityTypes.EVENT,
-    sourceId: defaultCalendarSource.id,
-    source: defaultCalendarSource,
-    name: 'internalCalendarName',
-    ownerAccount: 'personal',
-    accessLevel: Calendar.CalendarAccessLevel.OWNER,
-  });
-  console.log(`Your new calendar ID is: ${newCalendarID}`);
-}
-
 //DISHES_SCREEN
 const DishesScreen = ({ navigation }) => {
-  
   const [dishes, setDishes] = React.useState([]);
-  const [textInput, setTextInput] = React.useState('');
-  const [priceInput, setPriceInput] = React.useState('');
-  const [artInput, setArtInput] = React.useState('');
+  const [textInput, setTextInput] = React.useState("");
+  const [priceInput, setPriceInput] = React.useState("");
+  const [artInput, setArtInput] = React.useState("");
 
   React.useEffect(() => {
     getDishesFromUserDevice();
@@ -353,27 +301,27 @@ const DishesScreen = ({ navigation }) => {
   }, [dishes]);
 
   const addDish = () => {
-    if (textInput & priceInput  == '') {
-      Alert.alert('Error', 'Please input item');
+    if (textInput & (priceInput == "")) {
+      Alert.alert("Error", "Please input item");
     } else {
       const newDish = {
         id: Math.random(),
         task: textInput,
         price: priceInput,
-        art:artInput,
+        art: artInput,
         completed: false,
       };
       setDishes([...dishes, newDish]);
-      setTextInput('');
-      setPriceInput('');
-      setArtInput('');
+      setTextInput("");
+      setPriceInput("");
+      setArtInput("");
     }
   };
 
-  const saveDishToUserDevice = async dishes => {
+  const saveDishToUserDevice = async (dishes) => {
     try {
       const stringifyDishes = JSON.stringify(dishes);
-      await AsyncStorage.setItem('dishes', stringifyDishes);
+      await AsyncStorage.setItem("dishes", stringifyDishes);
     } catch (error) {
       console.log(error);
     }
@@ -381,7 +329,7 @@ const DishesScreen = ({ navigation }) => {
 
   const getDishesFromUserDevice = async () => {
     try {
-      const dishes = await AsyncStorage.getItem('dishes');
+      const dishes = await AsyncStorage.getItem("dishes");
       if (dishes != null) {
         setDishes(JSON.parse(dishes));
       }
@@ -390,48 +338,47 @@ const DishesScreen = ({ navigation }) => {
     }
   };
 
-
-
-  const deleteDish = dishId => {
-    const newDishesItem = dishes.filter(item => item.id != dishId);
+  const deleteDish = (dishId) => {
+    const newDishesItem = dishes.filter((item) => item.id != dishId);
     setDishes(newDishesItem);
   };
-
 
   const ListItem = ({ dish }) => {
     return (
       <View style={styles.listItem}>
         <View style={{ flex: 2 }}>
           <TouchableOpacity onPress={() => getDishesFromUserDevice(dish.id)}>
-          <Text
-           style={{
-             fontWeight: 'bold',
-             color: COLORS.primary,
-             fontSize: 15,
-             textDecorationLine: dish?.completed ? 'line-through' : 'yes',
-           }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: COLORS.primary,
+                fontSize: 15,
+                textDecorationLine: dish?.completed ? "line-through" : "yes",
+              }}
+            >
               Name: {dish?.task}
-         </Text>
-        
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 15,
-              color: COLORS.primary,
-              textDecorationLine: dish?.completed ? 'line-through' : 'yes',
-            }}>
+            </Text>
+
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 15,
+                color: COLORS.primary,
+                textDecorationLine: dish?.completed ? "line-through" : "yes",
+              }}
+            >
               Preis: <Text>{dish?.price}</Text>
-          </Text>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 15,
-              color: COLORS.primary,
-              textDecorationLine: dish?.completed ? 'line-through' : 'yes',
-            }}>
+            </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 15,
+                color: COLORS.primary,
+                textDecorationLine: dish?.completed ? "line-through" : "yes",
+              }}
+            >
               Art:<Text>{dish?.art}</Text>
-            
-          </Text>
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -448,8 +395,8 @@ const DishesScreen = ({ navigation }) => {
       style={{
         flex: 1,
         backgroundColor: COLORS.back,
-      }}>
-      
+      }}
+    >
       <View style={styles.inputSection}>
         <View style={styles.formInput}>
           <TextInput
@@ -458,38 +405,32 @@ const DishesScreen = ({ navigation }) => {
             numberOfLines={2}
             color={COLORS.primary}
             placeholder="Name"
-            onChangeText={text => setTextInput(text)}
+            onChangeText={(text) => setTextInput(text)}
           />
-          </View>
-          <View style={styles.formInput}>
+        </View>
+        <View style={styles.formInput}>
           <TextInput
             value={priceInput}
             enablesReturnKeyAutomatically
             numberOfLines={2}
             color={COLORS.primary}
             placeholder="Price"
-            onChangeText={price => setPriceInput(price)}
+            onChangeText={(price) => setPriceInput(price)}
           />
-          
-        
-      
-        </View> 
+        </View>
         <View style={styles.formInput}>
           <TextInput
             value={artInput}
             enablesReturnKeyAutomatically
             numberOfLines={2}
-            color = {COLORS.primary}
+            color={COLORS.primary}
             placeholder="Art"
-            onChangeText={art => setArtInput(art)}
+            onChangeText={(art) => setArtInput(art)}
           />
-          
-        
-      
         </View>
         <TouchableOpacity onPress={addDish}>
           <View style={styles.iconContainer}>
-            <Icon name="add" color='#efaa47' size={30} />
+            <Icon name="add" color="#efaa47" size={30} />
           </View>
         </TouchableOpacity>
       </View>
@@ -500,85 +441,114 @@ const DishesScreen = ({ navigation }) => {
         data={dishes}
         renderItem={({ item }) => <ListItem dish={item} />}
       />
-      
-
-      
     </SafeAreaView>
-  );
-};
-
-//NEW_DISH_SCREEN
-const NewDishScreen = ({ navigation }) => {
-  const [foodtype, setFoodtype] = useState("Fleisch");
-  const {t,i18n}=useTranslation();
-  return (
-    <View style={styles.container}>
-      <View>
-        <TextInput style={styles.formInput} placeholder="Name" />
-        <TextInput style={styles.formInput} placeholder="Preis" />
-        
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Gerichte")}
-        >
-          <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
-        </Pressable>
-      </View>
-    </View>
   );
 };
 
 //PLAN_SCREEN
 const PlansScreen = ({ navigation }) => {
-  const {t,i18n}=useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const [plan, setArtInput] = React.useState("");
+  const [plans, setPlans] = React.useState([]);
+
+  React.useEffect(() => {
+    getPlansFromUserDevice();
+  }, []);
+
+  const getPlansFromUserDevice = async () => {
+    try {
+      const plans = await AsyncStorage.getItem("plans");
+      if (plans != null) {
+        setDishes(JSON.parse(plans));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const ListItem = ({ plan }) => {
+    return (
+      <View style={styles.listItem}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.formText}>{t("Montag")}</Text>
+          <Text
+            style={{
+              fontWeight: "bold",
+              color: COLORS.primary,
+              fontSize: 15,
+              textDecorationLine: dish?.completed ? "line-through" : "yes",
+            }}
+          >
+            Name: {plan?.plan}
+          </Text>
+        </View>
+      </View>
+    );
+  };
   return (
-    <View style={styles.container}>
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Neuer Plan")}
-      >
-        <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
-      </Pressable>
-    </View>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.back,
+      }}
+    >
+      <View style={styles.container}>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Neuer Plan")}
+        >
+          <Text style={styles.buttontxt}>{t("Hinzufügen")}</Text>
+        </Pressable>
+      </View>
+
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ padding: 20, paddingBottom: 50 }}
+        data={plans}
+        renderItem={({ item }) => <ListItem plan={item} />}
+      />
+    </SafeAreaView>
   );
 };
+
 const NewPlanScreen = ({ navigation }) => {
-  const {t,i18n}=useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.formText}>{t("Montag")}</Text>
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Gerichte")}
+          onPress={() => navigation.navigate("Gerichtauswahl")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
         <Text style={styles.formText}>{t("Dienstag")}</Text>
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Gerichte")}
+          onPress={() => navigation.navigate("Gerichtauswahl")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
         <Text style={styles.formText}>{t("Mittwoch")}</Text>
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Gerichte")}
+          onPress={() => navigation.navigate("Gerichtauswahl")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
         <Text style={styles.formText}>{t("Donnerstag")}</Text>
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Gerichte")}
+          onPress={() => navigation.navigate("Gerichtauswahl")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
         <Text style={styles.formText}>{t("Freitag")}</Text>
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Gerichte")}
+          onPress={() => navigation.navigate("Gerichtauswahl")}
         >
           <Text style={styles.buttontxt}>+</Text>
         </Pressable>
@@ -592,40 +562,145 @@ const NewPlanScreen = ({ navigation }) => {
     </View>
   );
 };
+const ChooseDishesScreen = ({ navigation }) => {
+  const [plan, setPlansInput] = React.useState("");
+  const [plans, setPlans] = React.useState([]);
+  const [dishesInput, setDishesInput] = React.useState("dishes");
+  const [dishes, setDishes] = React.useState([]);
+
+  React.useEffect(() => {
+    getDishesFromUserDevice();
+  }, []);
+
+  React.useEffect(() => {
+    savePlansToUserDevice(plans);
+  }, [plans]);
+
+  const addPlans = () => {
+    const newPlan = {
+      id: Math.random(),
+      plan: dishesInput,
+      completed: false,
+    };
+    setPlans([...plans, newPlan]);
+    setPlansInput("");
+  };
+
+  const savePlansToUserDevice = async (plans) => {
+    try {
+      const stringifyPlans = JSON.stringify(plans);
+      await AsyncStorage.setItem("plans", stringifyPlans);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDishesFromUserDevice = async () => {
+    try {
+      const dishes = await AsyncStorage.getItem("dishes");
+      if (dishes != null) {
+        setDishes(JSON.parse(dishes));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const ListItem = ({ dish }) => {
+    return (
+      <View style={styles.listItem}>
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity
+            value={dishesInput}
+            onChangeText={(plan) => setPlansInput(plan)}
+            onPress={addPlans}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: COLORS.primary,
+                fontSize: 15,
+                textDecorationLine: dish?.completed ? "line-through" : "yes",
+              }}
+            >
+              Name: {dish?.task}
+            </Text>
+
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 15,
+                color: COLORS.primary,
+                textDecorationLine: dish?.completed ? "line-through" : "yes",
+              }}
+            >
+              Preis: {dish?.price}
+            </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 15,
+                color: COLORS.primary,
+                textDecorationLine: dish?.completed ? "line-through" : "yes",
+              }}
+            >
+              Art:{dish?.art}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.back,
+      }}
+    >
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ padding: 20, paddingBottom: 50 }}
+        data={dishes}
+        renderItem={({ item }) => <ListItem dish={item} />}
+      />
+    </SafeAreaView>
+  );
+};
+
 // <<<<<STYLES>>>>>
 
 const styles = StyleSheet.create({
   inputSection: {
-    width: '100%',
-    
-    alignItems: 'center',
+    width: "100%",
+
+    alignItems: "center",
     paddingHorizontal: 20,
   },
 
-    actionIcon: {
-      height: 25,
-      width: 25,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#1e1e1e',
-      marginLeft: 5,
-      borderRadius: 3,
-      marginVertical:12
-    },
-    listItem: {
-        padding: 20,
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        elevation: 12,
-        borderRadius: 7,
-        marginVertical: 10,
-        alignSelf:"center",
-        width:400,
-        height:98,
-        borderWidth: 1,
-        borderColor:'#efaa47'
-
-    },
+  actionIcon: {
+    height: 25,
+    width: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#1e1e1e",
+    marginLeft: 5,
+    borderRadius: 3,
+    marginVertical: 12,
+  },
+  listItem: {
+    padding: 20,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    elevation: 12,
+    borderRadius: 7,
+    marginVertical: 10,
+    alignSelf: "center",
+    width: 400,
+    height: 98,
+    borderWidth: 1,
+    borderColor: "#efaa47",
+  },
 
   container: {
     flex: 1,
@@ -658,9 +733,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 40,
     borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop:15,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 15,
   },
 
   logo: {
@@ -706,52 +781,50 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: "#fff",
     fontSize: 20,
-      textAlign:"center"
+    textAlign: "center",
   },
   item: {
     padding: 10,
     fontSize: 18,
     height: 44,
   },
-//login
-buttonOutline: {
-  backgroundColor: 'white',
-  marginTop: 5,
-  borderColor: '#0782F9',
-  borderWidth: 2,
-},
-buttonText: {
-  color: 'white',
-  fontWeight: '700',
-  fontSize: 16,
+  //login
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#0782F9",
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: "#0782F9",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  input: {
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+  },
+  buttonContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+  },
 
-},
-buttonOutlineText: {
-  color: '#0782F9',
-  fontWeight: '700',
-  fontSize: 16,
-},
-inputContainer: {
-  width: '80%'
-},
-input: {
-  backgroundColor: 'white',
-  paddingHorizontal: 15,
-  paddingVertical: 10,
-  borderRadius: 10,
-  marginTop: 5,
-},
-buttonContainer: {
-  width: '60%',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: 40,},
-
-  selector:{
+  selector: {
     minWidth: 180,
-    maxWidth: '50%',
+    maxWidth: "50%",
     margin: 16,
-  }
-
-
+  },
 });
