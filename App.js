@@ -279,7 +279,7 @@ const LoginScreen = () => {
 const CalendarScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <WeeklyCalendar style={{ height: 400 }} />
+      <WeeklyCalendar themeColor={'#efaa47'} style={{ height: 400, backgroundColor:'#1e1e1e' }} />
     </View>
   );
 };
@@ -826,4 +826,5 @@ const styles = StyleSheet.create({
     maxWidth: "50%",
     margin: 16,
   },
+
 });
